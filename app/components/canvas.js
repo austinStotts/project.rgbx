@@ -12,12 +12,29 @@ class Canvas extends Component {
       color: '#000',
     }
 
+
     window.onresize = () => this.resize();
     this.resize = this.resize.bind(this);
     this.mouse_down = this.mouse_down.bind(this);
     this.mouse_up = this.mouse_up.bind(this);
     this.mouse_move = this.mouse_move.bind(this);
     this.mouse_leave = this.mouse_leave.bind(this);
+  }
+
+  save_canvas () {
+    const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    this.props.set_canvas(image);
+  }
+
+  draw_canvas (image_url) {
+    console.log('%cDRAW', 'color: orange');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image;
+    img.onload = function(){
+      ctx.drawImage(img,0,0); // Or at whatever offset you like
+    };
+    img.src = image_url;
   }
 
   mouse_leave () {
@@ -33,6 +50,7 @@ class Canvas extends Component {
   mouse_up (event) {
     console.log('%c UP', 'color: lightblue');
     this.setState({ paint: false });
+    this.save_canvas();
   }
 
   mouse_move (event) {
@@ -52,7 +70,7 @@ class Canvas extends Component {
     canvas_width = w.innerWidth || e.clientWidth || g.clientWidth,
     canvas_height = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
-    this.setState({ canvas_width, canvas_height });
+    this.setState({ canvas_width, canvas_height }, _=> this.draw_canvas(this.props.canvas_data));
   }
 
   paint (x, y) {
@@ -72,7 +90,7 @@ class Canvas extends Component {
     return (
       <div id="canvas-wrapper">
         <canvas 
-          id="canvas" 
+          id="canvas"
           width={String(this.state.canvas_width * 0.9)} 
           height={String(this.state.canvas_height * 0.9)}
           onMouseDown={this.mouse_down}

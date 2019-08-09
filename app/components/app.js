@@ -6,13 +6,21 @@ class App extends Component {
   constructor() {
     super();
 
+    this.state = {
+      canvas_data: undefined,      
+    }
 
+    this.set_canvas = this.set_canvas.bind(this);
+  }
+
+  set_canvas (canvas_data) {
+    this.setState({ canvas_data });
   }
 
   render () {
     return (
       <div>
-        <Canvas/>
+        <Canvas canvas_data={this.state.canvas_data} set_canvas={this.set_canvas}/>
       </div>
 
     )
