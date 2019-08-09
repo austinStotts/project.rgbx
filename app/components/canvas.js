@@ -8,8 +8,11 @@ class Canvas extends Component {
       canvas_width: 500,
       canvas_height: 300,
       pixel_size: 5,
+      brush_size: 5,
       paint: false,
       color: '#000',
+      one: undefined,
+      two: undefined,
     }
 
 
@@ -47,7 +50,10 @@ class Canvas extends Component {
 
   mouse_down (event) {
     console.log('%c DOWN', 'color: lightgreen');
-    this.setState({ paint: true });
+    const rect = event.target.getBoundingClientRect();
+    const x = event.clientX - rect.left; 
+    const y = event.clientY - rect.top;
+    this.setState({ paint: true, one: [x, y] });
   }
 
   mouse_up (event) {
@@ -57,11 +63,12 @@ class Canvas extends Component {
   }
 
   mouse_move (event) {
-    const rect = event.target.getBoundingClientRect();
-    const x = event.clientX - rect.left; 
-    const y = event.clientY - rect.top;
     if(this.state.paint) {
-      this.paint(x, y);        
+      const rect = event.target.getBoundingClientRect();
+      const x2 = event.clientX - rect.left; 
+      const y2 = event.clientY - rect.top;
+      this.paint(this.state.one[0], this.state.one[1], x2, y2);
+      this.setState({ one: [x2, y2] });
     }
   }
 
@@ -76,13 +83,16 @@ class Canvas extends Component {
     this.setState({ canvas_width, canvas_height }, _=> this.draw_canvas(this.props.canvas_data));
   }
 
-  paint (x, y) {
-    // paint pixels on the canvas 
-    // when user clicks:
+  paint (x1, y1, x2, y2) {
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
+    ctx.lineWidth= this.state.brush_size;
+    ctx.lineCap = "round";
     ctx.fillStyle = this.state.color;
-    ctx.fillRect(x, y, this.state.pixel_size, this.state.pixel_size);
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
   }
 
   componentDidMount () {
