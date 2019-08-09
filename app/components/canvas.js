@@ -21,6 +21,9 @@ class Canvas extends Component {
     this.mouse_leave = this.mouse_leave.bind(this);
   }
 
+  // todo: fix paint engine to not make dots when painting quickly
+  // add reddis and web sockets... rooms and stuff...
+
   save_canvas () {
     const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
     this.props.set_canvas(image);
@@ -32,7 +35,7 @@ class Canvas extends Component {
     const ctx = canvas.getContext('2d');
     const img = new Image;
     img.onload = function(){
-      ctx.drawImage(img,0,0); // Or at whatever offset you like
+      ctx.drawImage(img,0,0);
     };
     img.src = image_url;
   }
