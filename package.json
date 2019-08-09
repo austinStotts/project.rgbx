@@ -1,0 +1,44 @@
+{
+  "name": "project.rgbx",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "webpack": "webpack -w",
+    "server": "nodemon ./server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/austinStotts/project.rgbx.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/austinStotts/project.rgbx/issues"
+  },
+  "homepage": "https://github.com/austinStotts/project.rgbx#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "ioredis": "^4.3.0",
+    "moment": "^2.23.0",
+    "nodemon": "^1.18.9",
+    "prop-types": "^15.6.2",
+    "radium": "^0.25.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.7.0",
+    "redis": "^2.8.0",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0",
+    "webpack": "^4.28.1",
+    "webpack-cli": "^3.2.1"
+  }
+}
+
