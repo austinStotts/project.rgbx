@@ -14,7 +14,8 @@ class Canvas extends Component {
       brush_size: 5,
       paint: false,
       color: '#000',
-      one: undefined
+      one: undefined,
+      buffer: []
     }
 
 
@@ -26,19 +27,33 @@ class Canvas extends Component {
     this.mouse_leave = this.mouse_leave.bind(this);
     this.paint = this.paint.bind(this);
     this.color = this.color.bind(this);
+    this.undo = this.undo.bind(this);
   }
 
   // todo: fix paint engine to not make dots when painting quickly
   // add reddis and web sockets... rooms and stuff...
 
   color ({ hex }) {
-    console.log(hex)
     this.setState({ color: hex });
+  }
+
+  undo () {
+    console.log('%cUNDO', 'color: orange;');
+    let new_buffer = this.state.buffer;
+    let image = new_buffer.pop();
+    this.draw_canvas(image);
+    this.setState({ buffer: new_buffer });
   }
 
   save_canvas () {
     const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-    this.props.set_canvas(image);
+    if(this.state.buffer.length < 50) {
+      this.setState({ buffer: [this.state.buffer, image] });
+    } else {
+      new_buffer = this.state.buffer;
+      new_buffer.shift();
+      this.setState({ buffer: [new_buffer, image] });
+    }
   }
 
   draw_canvas (image_url) {
@@ -89,7 +104,7 @@ class Canvas extends Component {
     canvas_width = w.innerWidth || e.clientWidth || g.clientWidth,
     canvas_height = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
-    this.setState({ canvas_width, canvas_height }, _=> this.draw_canvas(this.props.canvas_data));
+    this.setState({ canvas_width, canvas_height }, _=> this.draw_canvas(this.state.buffer.pop()));
   }
 
   paint (x1, y1, x2, y2) {
@@ -114,7 +129,7 @@ class Canvas extends Component {
         <div className="canvas-element-wrapper">
           <canvas 
             id="canvas"
-            width={String(this.state.canvas_width * 0.9)} 
+            width={String(this.state.canvas_width - 25)} 
             height={String(this.state.canvas_height * 0.9)}
             onMouseDown={this.mouse_down}
             onMouseUp={this.mouse_up}
@@ -124,6 +139,7 @@ class Canvas extends Component {
         </div>
         <div className="canvas-options-wrapper">
           <GithubPicker onChangeComplete={this.color}/>
+          <button onClick={this.undo}>undo</button>
         </div>
       </div>
     )

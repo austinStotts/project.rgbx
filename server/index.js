@@ -1,6 +1,35 @@
-const express = require('express');
-const app = express();
+const app = require('express')();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
-app.use(express.static('dist'));
+const Redis = require('ioredis');
+const redis = new Redis();
 
-app.listen(5700, () => console.log('\n\nROGER\nROGER\nListening on port :5700:\n'));
+const path = require('path');
+
+server.listen(5700);
+
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../dist/index.html'));
+})
+
+app.get('/index.js', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../dist/index.js'));
+})
+
+app.get('/style.css', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../dist/style.css'));
+})
+
+
+
+io.on('connection', (socket) => {
+
+
+  socket.on('disconnect', () => {
+    // user disconnected
+  })
+})
+
+redis.set("name", "Yakub");
+redis.get("name", (err, name) => console.log(name));

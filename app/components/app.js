@@ -7,7 +7,7 @@ class App extends Component {
     super();
 
     this.state = {
-      canvas_data: undefined,      
+      canvas_data: undefined,
     }
 
     this.set_canvas = this.set_canvas.bind(this);
@@ -21,6 +21,7 @@ class App extends Component {
     return (
       <div>
         <Canvas canvas_data={this.state.canvas_data} set_canvas={this.set_canvas}/>
+        <p className="name-label">created by: austin</p>
       </div>
 
     )

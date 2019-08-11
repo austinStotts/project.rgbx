@@ -5,11 +5,23 @@ body {
 #canvas-wrapper {
   display: inline-block;
   padding: 0px;
-  margin: 10px;
+  margin: 10px 10px 0px 10px;
   border: 2px solid black;
   box-shadow: 3px 3px 5px 6px #ccc;
 }
 
+#canvas {
+  border-bottom: 3px dashed rgb(194, 194, 194);
+}
 
+.name-label {
+padding: 0%;
+margin: 0%;
+font-size: 10px;
+
+position: absolute;
+right: 20px;
+color: rgb(88, 88, 88);
+}
 
 

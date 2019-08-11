@@ -27,7 +27,7 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "ioredis": "^4.3.0",
+    "ioredis": "^4.14.0",
     "moment": "^2.23.0",
     "nodemon": "^1.18.9",
     "prop-types": "^15.6.2",
