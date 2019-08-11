@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { GithubPicker } from 'react-color';
+
+// fuser -k PORT/tcp
 
 class Canvas extends Component {
   constructor (props) {
@@ -11,8 +14,7 @@ class Canvas extends Component {
       brush_size: 5,
       paint: false,
       color: '#000',
-      one: undefined,
-      two: undefined,
+      one: undefined
     }
 
 
@@ -22,10 +24,17 @@ class Canvas extends Component {
     this.mouse_up = this.mouse_up.bind(this);
     this.mouse_move = this.mouse_move.bind(this);
     this.mouse_leave = this.mouse_leave.bind(this);
+    this.paint = this.paint.bind(this);
+    this.color = this.color.bind(this);
   }
 
   // todo: fix paint engine to not make dots when painting quickly
   // add reddis and web sockets... rooms and stuff...
+
+  color ({ hex }) {
+    console.log(hex)
+    this.setState({ color: hex });
+  }
 
   save_canvas () {
     const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
@@ -37,7 +46,7 @@ class Canvas extends Component {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const img = new Image;
-    img.onload = function(){
+    img.onload = () => {
       ctx.drawImage(img,0,0);
     };
     img.src = image_url;
@@ -87,8 +96,8 @@ class Canvas extends Component {
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
     ctx.lineWidth= this.state.brush_size;
+    ctx.strokeStyle = this.state.color;
     ctx.lineCap = "round";
-    ctx.fillStyle = this.state.color;
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
@@ -102,15 +111,20 @@ class Canvas extends Component {
   render () {
     return (
       <div id="canvas-wrapper">
-        <canvas 
-          id="canvas"
-          width={String(this.state.canvas_width * 0.9)} 
-          height={String(this.state.canvas_height * 0.9)}
-          onMouseDown={this.mouse_down}
-          onMouseUp={this.mouse_up}
-          onMouseMove={this.mouse_move}
-          onMouseLeave={this.mouse_leave}
-        ></canvas>
+        <div className="canvas-element-wrapper">
+          <canvas 
+            id="canvas"
+            width={String(this.state.canvas_width * 0.9)} 
+            height={String(this.state.canvas_height * 0.9)}
+            onMouseDown={this.mouse_down}
+            onMouseUp={this.mouse_up}
+            onMouseMove={this.mouse_move}
+            onMouseLeave={this.mouse_leave}
+          ></canvas>
+        </div>
+        <div className="canvas-options-wrapper">
+          <GithubPicker onChangeComplete={this.color}/>
+        </div>
       </div>
     )
   }

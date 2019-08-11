@@ -19,10 +19,10 @@
   },
   "homepage": "https://github.com/austinStotts/project.rgbx#readme",
   "dependencies": {
-    "axios": "^0.18.0",
     "@babel/core": "^7.5.4",
     "@babel/preset-env": "^7.5.4",
     "@babel/preset-react": "^7.0.0",
+    "axios": "^0.18.0",
     "babel-loader": "^8.0.6",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
@@ -33,6 +33,7 @@
     "prop-types": "^15.6.2",
     "radium": "^0.25.1",
     "react": "^16.9.0",
+    "react-color": "^2.17.3",
     "react-dom": "^16.7.0",
     "redis": "^2.8.0",
     "socket.io": "^2.2.0",
@@ -41,4 +42,3 @@
     "webpack-cli": "^3.2.1"
   }
 }
-
