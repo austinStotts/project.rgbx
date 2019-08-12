@@ -25,6 +25,7 @@ class Canvas extends Component {
     this.mouse_up = this.mouse_up.bind(this);
     this.mouse_move = this.mouse_move.bind(this);
     this.mouse_leave = this.mouse_leave.bind(this);
+    this.clear_canvas = this.clear_canvas.bind(this);
     this.paint = this.paint.bind(this);
     this.color = this.color.bind(this);
     this.undo = this.undo.bind(this);
@@ -39,15 +40,20 @@ class Canvas extends Component {
 
   undo () {
     console.log('%cUNDO', 'color: orange;');
-    let new_buffer = this.state.buffer;
-    let image = new_buffer.pop();
-    this.draw_canvas(image);
-    this.setState({ buffer: new_buffer });
+    this.clear_canvas();
+    this.draw_canvas(this.props.get_canvas());
   }
 
   save_canvas () {
     const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
     this.props.set_canvas(image);
+  }
+
+  clear_canvas () {
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, this.state.canvas_width, this.state.canvas_height);
   }
 
   draw_canvas (image_url) {
@@ -133,6 +139,7 @@ class Canvas extends Component {
         </div>
         <div className="canvas-options-wrapper">
           <GithubPicker onChangeComplete={this.color}/>
+          <button onClick={this.undo}>undo</button>
         </div>
       </div>
     )
