@@ -47,13 +47,7 @@ class Canvas extends Component {
 
   save_canvas () {
     const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-    if(this.state.buffer.length < 50) {
-      this.setState({ buffer: [this.state.buffer, image] });
-    } else {
-      new_buffer = this.state.buffer;
-      new_buffer.shift();
-      this.setState({ buffer: [new_buffer, image] });
-    }
+    this.props.set_canvas(image);
   }
 
   draw_canvas (image_url) {
@@ -104,7 +98,7 @@ class Canvas extends Component {
     canvas_width = w.innerWidth || e.clientWidth || g.clientWidth,
     canvas_height = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
-    this.setState({ canvas_width, canvas_height }, _=> this.draw_canvas(this.state.buffer.pop()));
+    this.setState({ canvas_width, canvas_height }, _=> this.draw_canvas(this.props.canvas_data));
   }
 
   paint (x1, y1, x2, y2) {
@@ -139,7 +133,6 @@ class Canvas extends Component {
         </div>
         <div className="canvas-options-wrapper">
           <GithubPicker onChangeComplete={this.color}/>
-          <button onClick={this.undo}>undo</button>
         </div>
       </div>
     )

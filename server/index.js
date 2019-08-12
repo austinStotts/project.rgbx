@@ -2,8 +2,8 @@ const app = require('express')();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
-const Redis = require('ioredis');
-const redis = new Redis();
+// const Redis = require('ioredis');
+// const redis = new Redis();
 
 const path = require('path');
 
@@ -31,5 +31,5 @@ io.on('connection', (socket) => {
   })
 })
 
-redis.set("name", "Yakub");
-redis.get("name", (err, name) => console.log(name));
+// redis.set("name", "Yakub");
+// redis.get("name", (err, name) => console.log(name));
