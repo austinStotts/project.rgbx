@@ -11,7 +11,7 @@ module.exports = {
       ref: 'origin/master',
       repo: 'git@github.com:austinStotts/project.rgbx.git',
       path: '/home/ubuntu/rgbx',
-      'post-deploy': 'npm install && pm2 startOrRestart ecosystem.config.js'
+      'post-deploy': 'npm install&& npm run build && pm2 startOrRestart ecosystem.config.js'
     }
   }
 }

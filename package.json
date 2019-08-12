@@ -6,6 +6,7 @@
   "scripts": {
     "webpack": "webpack -w",
     "server": "nodemon ./server/index.js",
+    "build": "webpack",
     "setup": "pm2 deploy ecosystem.config.js production setup",
     "deploy": "pm2 deploy ecosystem.config.js production"
   },
