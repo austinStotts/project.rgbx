@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "webpack": "webpack -w",
-    "server": "nodemon ./server/index.js"
+    "server": "nodemon ./server/index.js",
+    "setup": "pm2 deploy ecosystem.config.js production setup",
+    "deploy": "pm2 deploy ecosystem.config.js production"
   },
   "repository": {
     "type": "git",
