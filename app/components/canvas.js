@@ -18,7 +18,6 @@ class Canvas extends Component {
       buffer: []
     }
 
-
     window.onresize = () => this.resize();
     this.resize = this.resize.bind(this);
     this.mouse_down = this.mouse_down.bind(this);
@@ -130,7 +129,7 @@ class Canvas extends Component {
           <canvas 
             id="canvas"
             width={String(this.state.canvas_width - 25)} 
-            height={String(this.state.canvas_height * 0.9)}
+            height={String(this.state.canvas_height * 0.85)}
             onMouseDown={this.mouse_down}
             onMouseUp={this.mouse_up}
             onMouseMove={this.mouse_move}
@@ -139,7 +138,7 @@ class Canvas extends Component {
         </div>
         <div className="canvas-options-wrapper">
           <GithubPicker onChangeComplete={this.color}/>
-          <button onClick={this.undo}>undo</button>
+          <button className="undo-btn" onClick={this.undo}>undo</button>
         </div>
       </div>
     )
