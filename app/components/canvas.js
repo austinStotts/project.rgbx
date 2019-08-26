@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { GithubPicker } from 'react-color';
+import Axios from 'axios';
+
+import Room from './room';
 
 // fuser -k PORT/tcp
 
@@ -15,8 +18,11 @@ class Canvas extends Component {
       paint: false,
       color: '#000',
       one: undefined,
-      buffer: []
+      buffer: [],
+      room: 'home'
     }
+
+    this.room = React.createRef()
 
     window.onresize = () => this.resize();
     this.resize = this.resize.bind(this);
@@ -28,7 +34,16 @@ class Canvas extends Component {
     this.paint = this.paint.bind(this);
     this.color = this.color.bind(this);
     this.undo = this.undo.bind(this);
+    this.change_room = this.change_room.bind(this);
   }
+
+  change_room () {
+    const room = this.room.current.value;
+    this.setState({ room }, () => {  
+      socket.emit('change room', room);
+    })
+  }
+
 
   // todo: fix paint engine to not make dots when painting quickly
   // add reddis and web sockets... rooms and stuff...
@@ -139,6 +154,7 @@ class Canvas extends Component {
         <div className="canvas-options-wrapper">
           <GithubPicker onChangeComplete={this.color}/>
           <button className="undo-btn" onClick={this.undo}>undo</button>
+          <Room change_room={this.change_room} ref={this.room}/>
         </div>
       </div>
     )
